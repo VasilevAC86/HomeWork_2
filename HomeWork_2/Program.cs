@@ -339,7 +339,8 @@ namespace HomeWork_2
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine(" заменено " + (count_source - count_final) + " раз(-а).");
         }
-        static void Print(int[,] matrix, int n = 1) // Функция с параметром по умолчанию для вывода матрицы в консоль (для задачи 4)
+        // Функция с параметром по умолчанию для вывода матрицы в консоль (для задачи 4)
+        static void Print(int[,] matrix, int n = 1) 
         {
             for (int i = 0; i < matrix.GetLength(0); i++)
             {
@@ -348,7 +349,8 @@ namespace HomeWork_2
                 Console.WriteLine();
             }
         }
-        static string Change(string my_text, char sym)
+        // Функция возведения в верхний регистр первого символа (кроме пробела) после sym (для задачи 6)
+        static string Change(string my_text, char sym) 
         {
             char symbol; // Переменная для хранения возводимого в верхний регистр символа
             string my_text_tmp = my_text.Remove(0, 1); // Подстрока для поиска символа . которую будем обрезать по ходу поиска
