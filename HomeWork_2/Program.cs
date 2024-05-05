@@ -31,7 +31,7 @@ namespace HomeWork_2
             int start = Convert.ToInt32(Console.ReadLine());
             Console.Write("Укажите конец диапазона (целое число) -> ");
             int end = Convert.ToInt32(Console.ReadLine());
-            while (end <= start)
+            while (end <= start) // Цикл проверки корректности ввода пользователем начала и конца диапазона
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Ошибка ввода! Конец диапазона не может быть меньше, чем начало!");
@@ -45,16 +45,14 @@ namespace HomeWork_2
             Console.WriteLine("\nОдномерный массив:");
             Console.ForegroundColor = ConsoleColor.White;
             foreach(int el in a) // Цикл вывода одномерного массива в консоль
-                Console.Write(el + "  ");
-            int rows = b.GetLength(0); // Кол-во строк двумерного массива
-            int cols = b.GetLength(1); // Кол-во столбцов двумерного массива            
+                Console.Write(el + "  ");            
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("\n\nДвумерный массив:");
             Console.ForegroundColor = ConsoleColor.White;
             Random r = new Random(); 
-            for (int i = 0; i < rows; ++i) // Цикл формирования и вывода в консоль двумерного масива
+            for (int i = 0; i < b.GetLength(0); ++i) // Цикл формирования и вывода в консоль двумерного масива
             {
-                for (int j = 0; j< cols; ++j)
+                for (int j = 0; j < b.GetLength(1); ++j)
                 {
                     b[i, j] = r.Next(start, end);
                     Console.Write(b[i, j] + "\t");
@@ -89,9 +87,9 @@ namespace HomeWork_2
             // Переменные для хранения общей суммы, суммы чётных эл. одномерного массива, суммы эл. нечётных столбцов двумерного массива 
             int sum = 0, sum_a = 0, sum_b = 0;
             int mult = 1; // Переменная для хранения общего произведения всех элементов обоих массивов
-            for (int i = 0; i < rows; i++)
+            for (int i = 0; i < b.GetLength(0); i++)
             {
-                for (int j = 0; j < cols; j++)
+                for (int j = 0; j < b.GetLength(1); j++)
                 {
                     sum += b[i, j];
                     mult *= b[i, j];
@@ -128,13 +126,11 @@ namespace HomeWork_2
             Console.WriteLine("\nЗадача 2 - Сумма элементов матрицы 5х5, расположенных между минимальным и максимальным элементами");
             Console.ForegroundColor = ConsoleColor.White;            
             int[,] matrix = new int[5, 5];
-            Random r2= new Random(); // Генератор случайных чисел
-            int rows2 = matrix.GetLength(0); // Кол-во строк матрицы
-            int cols2 = matrix.GetLength(1); // Кол-во столбцов матрицы            
-            for (int i = 0; i < rows2; ++i) // Цикл формирования матрицы по условиям задачи
-                for (int j = 0; j < cols2; ++j)            
+            Random r2= new Random(); // Генератор случайных чисел                      
+            for (int i = 0; i < matrix.GetLength(0); ++i) // Цикл формирования матрицы по условиям задачи
+                for (int j = 0; j < matrix.GetLength(1); ++j)            
                     matrix[i, j] = r2.Next(-100, 100);                 
-            int[] tmp2 = new int[rows2*cols2]; // Временный массив для перезаписи элементов матрицы в одномерный массив
+            int[] tmp2 = new int[matrix.GetLength(0) * matrix.GetLength(1)]; // Временный массив для перезаписи элементов матрицы в одномерный массив
             int it = 0; // Итератор для временного одномерного массива tmp2
             foreach (var el in matrix) // Цикл перезаписи матрицы в одномерный массив
             {
@@ -159,11 +155,11 @@ namespace HomeWork_2
             }            
             Console.WriteLine("\nИсодная матрица (максимальный и минимальный элементы выделены цветом):");
             // Цикл вывода матрицы с закрашенными максимальным и минимальным элементами
-            for (int i = 0; i < rows2; ++i)
+            for (int i = 0; i < matrix.GetLength(0); ++i)
             {
-                for (int j = 0; j < cols2; ++j)
+                for (int j = 0; j < matrix.GetLength(1); ++j)
                 {
-                    if ((i == index_max / rows2 && j == index_max % rows2) || (i == index_min / rows2 && j == index_min % rows2))
+                    if ((i == index_max / matrix.GetLength(0) && j == index_max % matrix.GetLength(0)) || (i == index_min / matrix.GetLength(0) && j == index_min % matrix.GetLength(0)))
                     {
                         Console.ForegroundColor = ConsoleColor.Blue;
                         Console.Write(matrix[i, j] + "\t");
@@ -302,9 +298,9 @@ namespace HomeWork_2
             int counter_pos = 1; // Счётчик индекса символа исходного текста
             int index; // Индекс первого символа предложения в подстроке поиска            
             // Пока в подстроке есть символ . возводим первую букву каждого предложения в верхний регистр
-            while (my_text_tmp.Contains('.')) 
-            {
-                index = my_text_tmp.IndexOf('.') + 1;
+            while (my_text_tmp.Contains('.') && my_text_tmp.IndexOf('.') != my_text_tmp.Length - 1)
+            {                   
+                index = my_text_tmp.IndexOf('.') + 1;                
                 counter_pos += index;
                 while (my_text_tmp[index] == ' ') // Определяем первый символ после . который не пробел
                 {
