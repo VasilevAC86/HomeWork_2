@@ -293,28 +293,10 @@ namespace HomeWork_2
                 symbol = char.ToUpper(my_text[0]);
                 my_text = my_text.Remove(0,1);
                 my_text = my_text.Insert(0, Convert.ToString(symbol));
-            }                
-            string my_text_tmp = my_text.Remove(0, 1); // Подстрока для поиска символа . которую будем обрезать по ходу поиска
-            int counter_pos = 1; // Счётчик индекса символа исходного текста
-            int index; // Индекс первого символа предложения в подстроке поиска            
-            // Пока в подстроке есть символ . возводим первую букву каждого предложения в верхний регистр
-            while (my_text_tmp.Contains('.') && my_text_tmp.IndexOf('.') != my_text_tmp.Length - 1)
-            {                   
-                index = my_text_tmp.IndexOf('.') + 1;                
-                counter_pos += index;
-                while (my_text_tmp[index] == ' ') // Определяем первый символ после . который не пробел
-                {
-                    counter_pos++;
-                    index++;
-                }
-                if (char.IsLower(my_text[counter_pos])) // Если первая буква предложения не заглавная, то возводим её в верхний регистр
-                {
-                    symbol = char.ToUpper(my_text[counter_pos]);
-                    my_text = my_text.Remove(counter_pos, 1);
-                    my_text = my_text.Insert(counter_pos, Convert.ToString(symbol));                   
-                }                
-                my_text_tmp = my_text_tmp.Remove(0, index); // Вырезаем из подстроки поиска найденное предложение с .
-            }           
+            }
+            my_text = Change(my_text, '.'); // Возводим в верхний регистр буквы после символа '.'
+            my_text = Change(my_text, '!'); // Возводим в верхний регистр буквы после символа '!'
+            my_text = Change(my_text, '?'); // Возводим в верхний регистр буквы после символа '?'
             Console.WriteLine(my_text);
 
             // --------------------------- Задача 7 - Запретное слово ----------------------------
@@ -365,6 +347,32 @@ namespace HomeWork_2
                     Console.Write(matrix[i, j] * n + "\t");
                 Console.WriteLine();
             }
+        }
+        static string Change(string my_text, char sym)
+        {
+            char symbol; // Переменная для хранения возводимого в верхний регистр символа
+            string my_text_tmp = my_text.Remove(0, 1); // Подстрока для поиска символа . которую будем обрезать по ходу поиска
+            int counter_pos = 1; // Счётчик индекса символа исходного текста
+            int index; // Индекс первого символа предложения в подстроке поиска            
+            // Пока в подстроке есть символ . возводим первую букву каждого предложения в верхний регистр
+            while (my_text_tmp.Contains(sym) && my_text_tmp.IndexOf(sym) != my_text_tmp.Length - 1)
+            {
+                index = my_text_tmp.IndexOf(sym) + 1;
+                counter_pos += index;
+                while (my_text_tmp[index] == ' ') // Определяем первый символ после sym который не пробел
+                {
+                    counter_pos++;
+                    index++;
+                }
+                if (char.IsLower(my_text[counter_pos])) // Если первая буква предложения не заглавная, то возводим её в верхний регистр
+                {
+                    symbol = char.ToUpper(my_text[counter_pos]);
+                    my_text = my_text.Remove(counter_pos, 1);
+                    my_text = my_text.Insert(counter_pos, Convert.ToString(symbol));
+                }
+                my_text_tmp = my_text_tmp.Remove(0, index); // Вырезаем из подстроки поиска найденное предложение с sym                
+            }
+            return my_text;
         }
     }
 }
